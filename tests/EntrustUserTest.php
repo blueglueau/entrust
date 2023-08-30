@@ -2,6 +2,7 @@
 
 use Zizaco\Entrust\Contracts\EntrustUserInterface;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
+use Illuminate\Cache\ArrayStore;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Cache;
 use Zizaco\Entrust\Permission;
@@ -91,6 +92,7 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
         Config::shouldReceive('get')->with('entrust.role_user_table')->times(9)->andReturn('role_user');
         Config::shouldReceive('get')->with('cache.ttl')->times(9)->andReturn('1440');
         Cache::shouldReceive('tags->remember')->times(9)->andReturn($user->roles);
+        Cache::shouldReceive('getStore')->times(9)->andReturn(new ArrayStore);
 
         /*
         |------------------------------------------------------------
@@ -137,6 +139,7 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
         Config::shouldReceive('get')->with('entrust.role_user_table')->times(11)->andReturn('role_user');
         Config::shouldReceive('get')->with('cache.ttl')->times(11)->andReturn('1440');
         Cache::shouldReceive('tags->remember')->times(11)->andReturn($user->roles);
+        Cache::shouldReceive('getStore')->times(11)->andReturn(new ArrayStore);
 
         /*
         |------------------------------------------------------------
@@ -182,6 +185,7 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
         Config::shouldReceive('get')->with('entrust.role_user_table')->times(6)->andReturn('role_user');
         Config::shouldReceive('get')->with('cache.ttl')->times(6)->andReturn('1440');
         Cache::shouldReceive('tags->remember')->times(6)->andReturn($user->roles);
+        Cache::shouldReceive('getStore')->times(6)->andReturn(new ArrayStore);
 
         /*
         |------------------------------------------------------------
@@ -240,6 +244,7 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
         Config::shouldReceive('get')->with('entrust.role_user_table')->times(32)->andReturn('role_user');
         Config::shouldReceive('get')->with('cache.ttl')->times(32)->andReturn('1440');
         Cache::shouldReceive('tags->remember')->times(32)->andReturn($user->roles);
+        Cache::shouldReceive('getStore')->times(32)->andReturn(new ArrayStore);
 
         $user->shouldReceive('hasRole')
             ->with(m::anyOf($userRoleNameA, $userRoleNameB), m::anyOf(true, false))
@@ -363,6 +368,7 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
         Config::shouldReceive('get')->with('entrust.role_user_table')->times(32)->andReturn('role_user');
         Config::shouldReceive('get')->with('cache.ttl')->times(32)->andReturn('1440');
         Cache::shouldReceive('tags->remember')->times(32)->andReturn($user->roles);
+        Cache::shouldReceive('getStore')->times(32)->andReturn(new ArrayStore);
 
         $user->shouldReceive('hasRole')
             ->with(m::anyOf($userRoleNameA, $userRoleNameB), m::anyOf(true, false))
@@ -524,6 +530,7 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
         Config::shouldReceive('get')->with('entrust.role_user_table')->times(32)->andReturn('role_user');
         Config::shouldReceive('get')->with('cache.ttl')->times(32)->andReturn('1440');
         Cache::shouldReceive('tags->remember')->times(32)->andReturn($user->roles);
+        Cache::shouldReceive('getStore')->times(32)->andReturn(new ArrayStore);
 
         $user->shouldReceive('hasRole')
             ->with(m::anyOf($userRoleNameA, $userRoleNameB), m::anyOf(true, false))
@@ -699,6 +706,7 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
         Config::shouldReceive('get')->with('entrust.role_user_table')->times(8)->andReturn('role_user');
         Config::shouldReceive('get')->with('cache.ttl')->times(8)->andReturn('1440');
         Cache::shouldReceive('tags->remember')->times(8)->andReturn($user->roles);
+        Cache::shouldReceive('getStore')->times(8)->andReturn(new ArrayStore);
 
         $user->shouldReceive('hasRole')
             ->with(m::anyOf('UserRoleA', 'UserRoleB'), m::anyOf(true, false))
@@ -774,6 +782,7 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
         Config::shouldReceive('get')->with('entrust.role_user_table')->times(32)->andReturn('role_user');
         Config::shouldReceive('get')->with('cache.ttl')->times(32)->andReturn('1440');
         Cache::shouldReceive('tags->remember')->times(32)->andReturn($user->roles);
+        Cache::shouldReceive('getStore')->times(32)->andReturn(new ArrayStore);
 
         $user->shouldReceive('hasRole')
             ->with(m::anyOf($userRoleNameA, $userRoleNameB), m::anyOf(true, false))

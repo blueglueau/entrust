@@ -34,6 +34,16 @@ class MigrationCommand extends Command
      */
     public function fire()
     {
+        $this->handle();
+    }
+
+    /**
+     * Execute the console command for Laravel 5.5+.
+     *
+     * @return void
+     */
+    public function handle()
+    {
         $this->laravel->view->addNamespace('entrust', substr(__DIR__, 0, -8).'views');
 
         $rolesTable          = Config::get('entrust.roles_table');

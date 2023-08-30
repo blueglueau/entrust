@@ -91,7 +91,7 @@ trait EntrustRoleTrait
     }
 
     /**
-     * Detach permission form current role.
+     * Detach permission from current role.
      *
      * @param object|array $permission
      *

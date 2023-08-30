@@ -54,6 +54,14 @@ in the `providers` array and
     
 to the `aliases` array.
 
+If you are going to use [Middleware](#middleware) (requires Laravel 5.1 or later) you also need to add
+```php
+    'role' => 'Zizaco\Entrust\Middleware\EntrustRole',
+    'permission' => 'Zizaco\Entrust\Middleware\EntrustPermission',
+    'ability' => 'Zizaco\Entrust\Middleware\EntrustAbility',
+```
+to `routeMiddleware` array in `app/Http/Kernel.php`.
+
 ## Configuration
 
 Set the property values in the `config/auth.php`.

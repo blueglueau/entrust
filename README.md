@@ -3,7 +3,6 @@
 [![Build Status](https://travis-ci.org/Zizaco/entrust.svg)](https://travis-ci.org/Zizaco/entrust)
 [![Version](https://img.shields.io/packagist/v/Zizaco/entrust.svg)](https://packagist.org/packages/zizaco/entrust)
 [![License](https://poser.pugx.org/zizaco/entrust/license.svg)](https://packagist.org/packages/zizaco/entrust)
-[![ProjectStatus](http://stillmaintained.com/Zizaco/entrust.png)](http://stillmaintained.com/Zizaco/entrust)
 [![Total Downloads](https://img.shields.io/packagist/dt/zizaco/entrust.svg)](https://packagist.org/packages/zizaco/entrust)
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/cc4af966-809b-4fbc-b8b2-bb2850e6711e/small.png)](https://insight.sensiolabs.com/projects/cc4af966-809b-4fbc-b8b2-bb2850e6711e)
@@ -40,7 +39,7 @@ contains the latest entrust version for Laravel 4.
 
 In order to install Laravel 5 Entrust, just add 
 
-    "zizaco/entrust": "dev-laravel-5"
+    "zizaco/entrust": "5.2.x-dev"
 
 to your composer.json. Then run `composer install` or `composer update`.
 
@@ -56,9 +55,9 @@ to the `aliases` array.
 
 If you are going to use [Middleware](#middleware) (requires Laravel 5.1 or later) you also need to add
 ```php
-    'role' => 'Zizaco\Entrust\Middleware\EntrustRole',
-    'permission' => 'Zizaco\Entrust\Middleware\EntrustPermission',
-    'ability' => 'Zizaco\Entrust\Middleware\EntrustAbility',
+    'role' => \Zizaco\Entrust\Middleware\EntrustRole::class,
+    'permission' => \Zizaco\Entrust\Middleware\EntrustPermission::class,
+    'ability' => \Zizaco\Entrust\Middleware\EntrustAbility::class,
 ```
 to `routeMiddleware` array in `app/Http/Kernel.php`.
 
@@ -504,13 +503,13 @@ SQLSTATE[HY000]: General error: 1005 Can't create table 'laravelbootstrapstarter
 ```
 
 Then it's likely that the `id` column in your user table does not match the `user_id` column in `role_user`.
-Match sure both are `INT(10)`.
+Make sure both are `INT(10)`.
 
 When trying to use the EntrustUserTrait methods, you encounter the error which looks like
 
     Class name must be a valid object or a string
 
-then probably you don't have published Entrust assets or something went wrong when you did it. 
+then probably you don't have published Entrust assets or something went wrong when you did it.
 First of all check that you have the `entrust.php` file in your `app/config` directory.
 If you don't, then try `php artisan vendor:publish` and, if it does not appear, manually copy the `/vendor/zizaco/entrust/src/config/config.php` file in your config directory and rename it `entrust.php`.
 

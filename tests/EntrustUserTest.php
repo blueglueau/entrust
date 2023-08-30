@@ -43,11 +43,6 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
         $belongsToMany = new stdClass();
         $user = m::mock('HasRoleUser')->makePartial();
 
-        // $app = m::mock('app')->shouldReceive('instance')->getMock();
-        // $config = m::mock('config');
-        // Config::setFacadeApplication($app);
-        // Config::swap($config);
-
         /*
         |------------------------------------------------------------
         | Expectation
@@ -87,6 +82,15 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
 
         $user = new HasRoleUser();
         $user->roles = [$roleA, $roleB];
+
+        /*
+        |------------------------------------------------------------
+        | Expectation
+        |------------------------------------------------------------
+        */
+        Config::shouldReceive('get')->with('entrust.role_user_table')->times(9)->andReturn('role_user');
+        Config::shouldReceive('get')->with('cache.ttl')->times(9)->andReturn('1440');
+        Cache::shouldReceive('tags->remember')->times(9)->andReturn($user->roles);
 
         /*
         |------------------------------------------------------------

@@ -24,18 +24,27 @@ trait EntrustRoleTrait
     }
     public function save(array $options = [])
     {   //both inserts and updates
-        parent::save($options);
+        if(!parent::save($options)){
+            return false;
+        }
         Cache::tags(Config::get('entrust.permission_role_table'))->flush();
+        return true;
     }
     public function delete(array $options = [])
     {   //soft or hard
-        parent::delete($options);
+        if(!parent::delete($options)){
+            return false;
+        }
         Cache::tags(Config::get('entrust.permission_role_table'))->flush();
+        return true;
     }
     public function restore()
     {   //soft delete undo's
-        parent::restore();
+        if(!parent::restore()){
+            return false;
+        }
         Cache::tags(Config::get('entrust.permission_role_table'))->flush();
+        return true;
     }
 
     /**
@@ -45,7 +54,8 @@ trait EntrustRoleTrait
      */
     public function users()
     {
-        return $this->belongsToMany(Config::get('auth.model'), Config::get('entrust.role_user_table'),Config::get('entrust.role_foreign_key'),Config::get('entrust.user_foreign_key'));
+        return $this->belongsToMany(Config::get('auth.providers.users.model'), Config::get('entrust.role_user_table'),Config::get('entrust.role_foreign_key'),Config::get('entrust.user_foreign_key'));
+       // return $this->belongsToMany(Config::get('auth.model'), Config::get('entrust.role_user_table'));
     }
 
     /**
@@ -56,7 +66,7 @@ trait EntrustRoleTrait
      */
     public function perms()
     {
-        return $this->belongsToMany(Config::get('entrust.permission'), Config::get('entrust.permission_role_table'));
+        return $this->belongsToMany(Config::get('entrust.permission'), Config::get('entrust.permission_role_table'), Config::get('entrust.role_foreign_key'), Config::get('entrust.permission_foreign_key'));
     }
 
     /**

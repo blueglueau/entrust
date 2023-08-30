@@ -37,28 +37,50 @@ contains the latest entrust version for Laravel 4.
 
 ## Installation
 
-In order to install Laravel 5 Entrust, just add 
+1) In order to install Laravel 5 Entrust, just add the following to your composer.json. Then run `composer update`:
 
-    "zizaco/entrust": "5.2.x-dev"
+```json
+"zizaco/entrust": "5.2.x-dev"
+```
 
-to your composer.json. Then run `composer install` or `composer update`.
+2) Open your `config/app.php` and add the following to the `providers` array:
 
-Then in your `config/app.php` add 
+```php
+Zizaco\Entrust\EntrustServiceProvider::class,
+```
 
-    Zizaco\Entrust\EntrustServiceProvider::class
-    
-in the `providers` array and
+3) In the same `config/app.php` and add the following to the `aliases ` array: 
 
-    'Entrust' => Zizaco\Entrust\EntrustFacade::class
-    
-to the `aliases` array.
+```php
+'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
+```
 
-If you are going to use [Middleware](#middleware) (requires Laravel 5.1 or later) you also need to add
+4) Run the command below to publish the package config file `config/entrust.php`:
+
+```shell
+php artisan vendor:publish
+```
+
+5) Open your `config/auth.php` and add the following to it:
+
+```php
+'providers' => [
+    'users' => [
+        'driver' => 'eloquent',
+        'model' => Namespace\Of\Your\User\Model\User::class,
+        'table' => 'users',
+    ],
+],
+```
+
+6)  If you want to use [Middleware](#middleware) (requires Laravel 5.1 or later) you also need to add the following:
+
 ```php
     'role' => \Zizaco\Entrust\Middleware\EntrustRole::class,
     'permission' => \Zizaco\Entrust\Middleware\EntrustPermission::class,
     'ability' => \Zizaco\Entrust\Middleware\EntrustAbility::class,
 ```
+
 to `routeMiddleware` array in `app/Http/Kernel.php`.
 
 ## Configuration
@@ -66,8 +88,7 @@ to `routeMiddleware` array in `app/Http/Kernel.php`.
 Set the property values in the `config/auth.php`.
 These values will be used by entrust to refer to the correct user table and model.
 
-You can also publish the configuration for this package to further customize table names and model namespaces.  
-Just use `php artisan vendor:publish` and a `entrust.php` file will be created in your app/config directory.
+To further customize table names and model namespaces, edit the `config/entrust.php`.
 
 ### User relation to roles
 
@@ -280,7 +301,7 @@ Entrust::can('permission-name');
 // is identical to
 
 Auth::user()->hasRole('role-name');
-Auth::user()->can('permission-name);
+Auth::user()->can('permission-name');
 ```
 
 You can also use placeholders (wildcards) to check any matching permission by doing:
@@ -401,7 +422,7 @@ It is possible to use pipe symbol as *OR* operator:
 
 To emulate *AND* functionality just use multiple instances of middleware
 ```php
-'middleware' => ['permission:owner', 'permission:writer']
+'middleware' => ['role:owner', 'role:writer']
 ```
 
 For more complex situations use `ability` middleware which accepts 3 parameters: roles, permissions, validate_all
@@ -510,7 +531,7 @@ When trying to use the EntrustUserTrait methods, you encounter the error which l
     Class name must be a valid object or a string
 
 then probably you don't have published Entrust assets or something went wrong when you did it.
-First of all check that you have the `entrust.php` file in your `app/config` directory.
+First of all check that you have the `entrust.php` file in your `config` directory.
 If you don't, then try `php artisan vendor:publish` and, if it does not appear, manually copy the `/vendor/zizaco/entrust/src/config/config.php` file in your config directory and rename it `entrust.php`.
 
 ## License

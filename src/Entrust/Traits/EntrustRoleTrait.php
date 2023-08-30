@@ -150,6 +150,10 @@ trait EntrustRoleTrait
         } else {
             $this->perms()->detach();
         }
+
+        if(Cache::getStore() instanceof TaggableStore) {
+             Cache::tags(Config::get('entrust.permission_role_table'))->flush();
+         }
     }
 
     /**
@@ -166,7 +170,7 @@ trait EntrustRoleTrait
         }
 
         if (is_array($permission)) {
-            $permission = $permission['id'];
+            return $this->attachPermissions($permission);
         }
 
         $this->perms()->attach($permission);
@@ -181,11 +185,13 @@ trait EntrustRoleTrait
      */
     public function detachPermission($permission)
     {
-        if (is_object($permission))
+        if (is_object($permission)) {
             $permission = $permission->getKey();
+        }
 
-        if (is_array($permission))
-            $permission = $permission['id'];
+        if (is_array($permission)) {
+            return $this->detachPermissions($permission);
+        }
 
         $this->perms()->detach($permission);
     }
@@ -211,8 +217,10 @@ trait EntrustRoleTrait
      *
      * @return void
      */
-    public function detachPermissions($permissions)
+    public function detachPermissions($permissions = null)
     {
+        if (!$permissions) $permissions = $this->perms()->get();
+
         foreach ($permissions as $permission) {
             $this->detachPermission($permission);
         }

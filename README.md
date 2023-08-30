@@ -1,14 +1,17 @@
 # ENTRUST (Laravel 5 Package)
 
 [![Build Status](https://travis-ci.org/Zizaco/entrust.svg)](https://travis-ci.org/Zizaco/entrust)
+[![Version](https://img.shields.io/packagist/v/Zizaco/entrust.svg)](https://packagist.org/packages/zizaco/entrust)
 [![License](https://poser.pugx.org/zizaco/entrust/license.svg)](https://packagist.org/packages/zizaco/entrust)
 [![ProjectStatus](http://stillmaintained.com/Zizaco/entrust.png)](http://stillmaintained.com/Zizaco/entrust)
 [![Total Downloads](https://img.shields.io/packagist/dt/zizaco/entrust.svg)](https://packagist.org/packages/zizaco/entrust)
+
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/cc4af966-809b-4fbc-b8b2-bb2850e6711e/small.png)](https://insight.sensiolabs.com/projects/cc4af966-809b-4fbc-b8b2-bb2850e6711e)
 
 Entrust is a succinct and flexible way to add Role-based Permissions to **Laravel 5**.
 
-If you are looking for the Laravel 4 version, take a look [Release 1.3.x](https://github.com/Zizaco/entrust/tree/1.3.0) release tree.
+If you are looking for the Laravel 4 version, take a look [Branch 1.0](https://github.com/Zizaco/entrust/tree/1.0). It
+contains the latest entrust version for Laravel 4.
 
 ## Contents
 
@@ -24,6 +27,8 @@ If you are looking for the Laravel 4 version, take a look [Release 1.3.x](https:
     - [Concepts](#concepts)
         - [Checking for Roles & Permissions](#checking-for-roles--permissions)
         - [User ability](#user-ability)
+    - [Blade templates](#blade-templates)
+    - [Middleware](#middleware)
     - [Short syntax route filter](#short-syntax-route-filter)
     - [Route filter](#route-filter)
 - [Troubleshooting](#troubleshooting)
@@ -271,6 +276,17 @@ Auth::user()->hasRole('role-name');
 Auth::user()->can('permission-name);
 ```
 
+You can also use placeholders (wildcards) to check any matching permission by doing:
+
+```php
+// match any admin permission
+$user->can("admin.*"); // true
+
+// match any permission about users
+$user->can("*_users"); // true
+```
+
+
 #### User ability
 
 More advanced checking can be done using the awesome `ability` function.
@@ -327,6 +343,63 @@ var_dump($allValidations);
 //     ['create-post'] => bool(true)
 //     ['edit-user'] => bool(false)
 // }
+
+```
+The `Entrust` class has a shortcut to `ability()` for the currently logged in user:
+
+```php
+Entrust::ability('admin,owner', 'create-post,edit-user');
+
+// is identical to
+
+Auth::user()->ability('admin,owner', 'create-post,edit-user');
+```
+
+### Blade templates
+
+Three directives are available for use within your Blade templates. What you give as the directive arguments will be directly passed to the corresponding `Entrust` function.
+
+```php
+@role('admin')
+    <p>This is visible to users with the admin role. Gets translated to 
+    \Entrust::role('admin')</p>
+@endrole
+
+@permission('manage-admins')
+    <p>This is visible to users with the given permissions. Gets translated to 
+    \Entrust::can('manage-admins'). The @can directive is already taken by core 
+    laravel authorization package, hence the @permission directive instead.</p>
+@endpermission
+
+@ability('admin,owner', 'create-post,edit-user')
+    <p>This is visible to users with the given abilities. Gets translated to 
+    \Entrust::ability('admin,owner', 'create-post,edit-user')</p>
+@endability
+```
+
+### Middleware
+
+You can use a middleware to filter routes and route groups by permission or role
+```php
+Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function() {
+    Route::get('/', 'AdminController@welcome');
+    Route::get('/manage', ['middleware' => ['permission:manage-admins'], 'uses' => 'AdminController@manageAdmins']);
+});
+```
+
+It is possible to use pipe symbol as *OR* operator:
+```php
+'middleware' => ['role:admin|root']
+```
+
+To emulate *AND* functionality just use multiple instances of middleware
+```php
+'middleware' => ['permission:owner', 'permission:writer']
+```
+
+For more complex situations use `ability` middleware which accepts 3 parameters: roles, permissions, validate_all
+```php
+'middleware' => ['ability:admin|owner,create-post|edit-user,true']
 ```
 
 ### Short syntax route filter
@@ -431,7 +504,7 @@ When trying to use the EntrustUserTrait methods, you encounter the error which l
 
 then probably you don't have published Entrust assets or something went wrong when you did it. 
 First of all check that you have the `entrust.php` file in your `app/config` directory.
-If you don't, then try `php artisan vendor:publish` and, if it does not apper, manually copy the `/vendor/zizaco/entrust/src/config/config.php` file in your config directory and rename it `entrust.php`.
+If you don't, then try `php artisan vendor:publish` and, if it does not appear, manually copy the `/vendor/zizaco/entrust/src/config/config.php` file in your config directory and rename it `entrust.php`.
 
 ## License
 

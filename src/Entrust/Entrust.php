@@ -75,6 +75,7 @@ class Entrust
         if ($user = $this->user()) {
             return $user->ability($roles, $permissions, $options);
         }
+
         return false;
     }
 

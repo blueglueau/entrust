@@ -1,7 +1,7 @@
 ### l5/1.9.2
 Merge master from `ba9241426f9c518982d868e2cbac381a9581d802`.
 
-- Refactor EntrustUserTrait to rely on `auth.providers.users.model` instead of `auth.model` in SoftDeletes checks.
+- Refactor EntrustUserTrait to rely on `auth.providers.users.model` instead of `auth.model` (as used upto laravel 5.1) in SoftDeletes checks.
 - Updated Docs
     > If your app uses a custom namespace then you'll need to tell entrust where your `permission` and `role` models are, you can do this by editing the config file in `config/entrust.php`
 

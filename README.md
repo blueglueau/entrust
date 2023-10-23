@@ -40,16 +40,16 @@ Add a repository alias to this repository
     ]
 ```
 
-#### support branch 7.x
+#### support branch 8.x
 ```json
-"zizaco/entrust": "dev-laravel-7"
+"zizaco/entrust": "dev-laravel-8"
 ```
 
 OR
 
-#### tagged 7.x
+#### tagged 8.x
 ```json
-"zizaco/entrust": "~7.0"
+"zizaco/entrust": "~8.0"
 ```
 
 Then run `composer update zizaco/entrust `

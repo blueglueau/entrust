@@ -51,7 +51,13 @@ This allows your existing codebase to continue to work without any additional ch
 Add a repository alias to your composer.json file.
 
 ```json
-"zizaco/entrust": "5.2.x-dev"
+   "repositories": [
+        {
+            "type": "git",
+            "name": "zizaco/entrust",
+            "url": "https://github.com/theodson/entrust"
+        }
+    ]
 ```
 
 Now you can require the appropriate tagged version (or latest from the support branch) for the Laravel version you need.

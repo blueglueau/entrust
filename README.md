@@ -1,6 +1,6 @@
 # ENTRUST (Laravel 5 Package)
 
-Entrust is a succinct and flexible way to add Role-based Permissions to **Laravel 6**.
+Entrust is a succinct and flexible way to add Role-based Permissions to **Laravel 8**.
 
 ## Contents
 

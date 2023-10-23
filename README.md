@@ -16,6 +16,7 @@ Support branches have been created for each Laravel version.
 
 **This package exists to maintain the original `zizaco/entrust` behaviour as an interim step before swapping out to another Roles/Permissions solution, such as [spatie/laravel-permission](https://github.com/spatie/laravel-permission).**
 
+> later laravel versions >=7 are untested and dependency updates. 
 ----
 
 ## Contents

@@ -1,6 +1,22 @@
 # ENTRUST (Laravel 5 Package)
 
-Entrust is a succinct and flexible way to add Role-based Permissions to **Laravel 6**.
+Entrust is a succinct and flexible way to add Role-based Permissions to **Laravel 5**. 
+
+> Originally developed by Zizaco for Laravel versions 5.x there was no official support for Laravel 6+ (_see the issues and PRs in the [original repo](https://github.com/Zizaco/entrust)_).
+
+#### Role-based Permissions to **Laravel 6, 7, 8, 9**.
+This fork incorporates some of the work from other forked repositories to provide basic and minimal support for use with Laravel 6,7,8,9.
+Support branches have been created for each Laravel version.
+
+ - `laravel-5`
+ - `laravel-6` 
+ - `laravel-7`
+ - `laravel-8`
+ - `laravel-9`
+
+**This package exists to maintain the original `zizaco/entrust` behaviour as an interim step before swapping out to another Roles/Permissions solution, such as [spatie/laravel-permission](https://github.com/spatie/laravel-permission).**
+
+----
 
 ## Contents
 
@@ -27,9 +43,13 @@ Entrust is a succinct and flexible way to add Role-based Permissions to **Larave
 
 ## Installation
 
-1) In order to install Laravel Entrust, just add the following to your composer.json. 
+### Repository alias
 
-Add a repository alias to this repository
+To make the replacement of `zizaco/entrust` easy for Laravel 6 (and above) it is recommended you add a *repository alia*s to this (or your forked) repository.
+This allows your existing codebase to continue to work without any additional changes (_no namespace or package differences_).
+
+Add a repository alias to your composer.json file.
+
 ```json
    "repositories": [
         {
@@ -40,19 +60,35 @@ Add a repository alias to this repository
     ]
 ```
 
-#### support branch 6.x
-```json
-"zizaco/entrust": "dev-laravel-6"
+Now you can require the appropriate tagged version (or latest from the support branch) for the Laravel version you need.
+
+For Laravel 6  
+```
+composer require "zizaco/entrust": "^6.0"
 ```
 
-OR
-
-#### tagged 6.x
-```json
-"zizaco/entrust": "~6.0"
+For Laravel 7  
+```
+composer require "zizaco/entrust": "^7.0"
 ```
 
-Then run `composer update zizaco/entrust `
+For Laravel 8  
+```
+composer require "zizaco/entrust": "^8.0"
+```
+
+For Laravel 9  
+```
+composer require "zizaco/entrust": "^9.0"
+```
+
+Latest support branch.  
+In this example we get the latest from the Laravel 6 support branch.
+
+```
+composer require "zizaco/entrust": "dev-laravel-6"
+```
+
 
 
 2) Open your `config/app.php` and add the following to the `providers` array:

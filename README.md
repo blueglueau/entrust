@@ -1,16 +1,22 @@
 # ENTRUST (Laravel 5 Package)
 
-[![Build Status](https://travis-ci.org/Zizaco/entrust.svg)](https://travis-ci.org/Zizaco/entrust)
-[![Version](https://img.shields.io/packagist/v/Zizaco/entrust.svg)](https://packagist.org/packages/zizaco/entrust)
-[![License](https://poser.pugx.org/zizaco/entrust/license.svg)](https://packagist.org/packages/zizaco/entrust)
-[![Total Downloads](https://img.shields.io/packagist/dt/zizaco/entrust.svg)](https://packagist.org/packages/zizaco/entrust)
+Entrust is a succinct and flexible way to add Role-based Permissions to **Laravel 5**. 
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/cc4af966-809b-4fbc-b8b2-bb2850e6711e/small.png)](https://insight.sensiolabs.com/projects/cc4af966-809b-4fbc-b8b2-bb2850e6711e)
+> Originally developed by Zizaco for Laravel versions 5.x there was no official support for Laravel 6+ (_see the issues and PRs in the [original repo](https://github.com/Zizaco/entrust)_).
 
-Entrust is a succinct and flexible way to add Role-based Permissions to **Laravel 5**.
+#### Role-based Permissions to **Laravel 6, 7, 8, 9**.
+This fork incorporates some of the work from other forked repositories to provide basic and minimal support for use with Laravel 6,7,8,9.
+Support branches have been created for each Laravel version.
 
-If you are looking for the Laravel 4 version, take a look [Branch 1.0](https://github.com/Zizaco/entrust/tree/1.0). It
-contains the latest entrust version for Laravel 4.
+ - `laravel-5`
+ - `laravel-6` 
+ - `laravel-7`
+ - `laravel-8`
+ - `laravel-9`
+
+**This package exists to maintain the original `zizaco/entrust` behaviour as an interim step before swapping out to another Roles/Permissions solution, such as [spatie/laravel-permission](https://github.com/spatie/laravel-permission).**
+
+----
 
 ## Contents
 
@@ -37,11 +43,47 @@ contains the latest entrust version for Laravel 4.
 
 ## Installation
 
-1) In order to install Laravel 5 Entrust, just add the following to your composer.json. Then run `composer update`:
+### Repository alias
+
+To make the replacement of `zizaco/entrust` easy for Laravel 6 (and above) it is recommended you add a *repository alia*s to this (or your forked) repository.
+This allows your existing codebase to continue to work without any additional changes (_no namespace or package differences_).
+
+Add a repository alias to your composer.json file.
 
 ```json
 "zizaco/entrust": "5.2.x-dev"
 ```
+
+Now you can require the appropriate tagged version (or latest from the support branch) for the Laravel version you need.
+
+For Laravel 6  
+```
+composer require "zizaco/entrust": "^6.0"
+```
+
+For Laravel 7  
+```
+composer require "zizaco/entrust": "^7.0"
+```
+
+For Laravel 8  
+```
+composer require "zizaco/entrust": "^8.0"
+```
+
+For Laravel 9  
+```
+composer require "zizaco/entrust": "^9.0"
+```
+
+Latest support branch.  
+In this example we get the latest from the Laravel 6 support branch.
+
+```
+composer require "zizaco/entrust": "dev-laravel-6"
+```
+
+
 
 2) Open your `config/app.php` and add the following to the `providers` array:
 
@@ -164,12 +206,19 @@ Next, use the `EntrustUserTrait` trait in your existing `User` model. For exampl
 
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 
-class User extends Eloquent
+class User extends Model implements AuthenticatableContract,
+                                    AuthorizableContract,
+                                    CanResetPasswordContract
 {
-    use EntrustUserTrait; // add this trait to your user model
-
-    ...
-}
+    use Authenticatable,
+        Authorizable,
+        CanResetPassword,
+        EntrustUserTrait // add this trait to your user model
+        {
+            EntrustUserTrait ::can insteadof Authorizable; //add insteadof avoid php trait conflict resolution
+        }
+        
+        ...
 ```
 
 This will enable the relation with `Role` and add the following methods `roles()`, `hasRole($name)`, `withRole($name)`, `can($permission)`, and `ability($roles, $permissions, $options)` within your `User` model.

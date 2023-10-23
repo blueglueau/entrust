@@ -305,10 +305,10 @@ trait EntrustUserTrait
     }
 
     /**
-     *Filtering users according to their role 
+     * Filtering users according to their role 
      *
-     *@param string $role
-     *@return users collection
+     * @param string $role
+     * @return users collection
      */
     public function scopeWithRole($query, $role)
     {

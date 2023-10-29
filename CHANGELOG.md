@@ -1,3 +1,19 @@
+### 6.0.1, 7.0.1, 8.0.1, 9.0.1
+
+- Do not generate partial cache-keys when a User's primary-key is empty
+
+----
+
+### 1.9.4
+
+- Do not generate partial cache-keys when a User's primary-key is empty
+
+### 1.9.3
+
+- README updates for repo alias use.
+
+----
+
 ### l5/1.9.2
 Merge master from `ba9241426f9c518982d868e2cbac381a9581d802`.
 

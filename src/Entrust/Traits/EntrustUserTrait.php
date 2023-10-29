@@ -22,14 +22,20 @@ trait EntrustUserTrait
      */
     public function cachedRoles()
     {
-        $userPrimaryKey = $this->primaryKey;
-        $cacheKey = 'entrust_roles_for_user_'.$this->$userPrimaryKey;
+        if(! $this->getKey()) {
+            // Do not generate partial cache-keys when a User's primary-key is empty.
+            // e.g. when a "saving" event is fired and any of Entrust's `hasRole`,
+            // `can` or `ability` methods are called.
+            return collect();
+        }
+        $cacheKey = 'entrust_roles_for_user_'.$this->getKey();
         if(Cache::getStore() instanceof TaggableStore) {
             return Cache::tags(Config::get('entrust.role_user_table'))->remember($cacheKey, Config::get('cache.ttl'), function () {
                 return $this->roles()->get();
             });
         }
-        else return $this->roles()->get();
+
+        return $this->roles()->get();
     }
 
     /**

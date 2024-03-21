@@ -1,8 +1,28 @@
+### 6.0.2, 7.0.2, 8.0.2, 9.0.2
+
+- Fix cache miss issue for `user->cachedRoles()`.
+
+  The Traits rely on `App::config('cache.ttl')` and they were missing a default value (equivalent to null) resulting in no caching behaviour.
+  _Oddly the chosen config 'cache.ttl' does not exist by default in Laravel._
+
+  - Move the caching ttl config into the package's config space under 'entrust.cache.ttl'.
+  - Keep the default behaviour as no-caching (null ttl) with expectation the developer will "opt in" to enable caching.
+
 ### 6.0.1, 7.0.1, 8.0.1, 9.0.1
 
 - Do not generate partial cache-keys when a User's primary-key is empty
 
 ----
+
+### 1.9.5
+
+- Fix constant cache miss issue for `user->cachedRoles()`.
+
+  The Traits rely on `App::config('cache.ttl')` and they were missing a default value (equivalent to null) resulting in no caching behaviour.
+  _Oddly the chosen config 'cache.ttl' does not exist by default in Laravel._
+
+  - Move the caching ttl config into the package's config space under 'entrust.cache.ttl'.
+  - Keep the default behaviour as no-caching (null ttl) with expectation the developer will "opt in" to enable caching.
 
 ### 1.9.4
 
@@ -14,6 +34,7 @@
 
 ----
 
+- Fix constant cache miss issue for `user->cachedRoles()`.
 ### l5/1.9.2
 Merge master from `ba9241426f9c518982d868e2cbac381a9581d802`.
 

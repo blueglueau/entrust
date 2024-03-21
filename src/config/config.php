@@ -12,6 +12,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Entrust Cache TimeToLive
+    |--------------------------------------------------------------------------
+    |
+    | This is the time to live for cache entries in minutes.
+    | It is applicable to user->cachedRoles() and role->cachedPermissions()
+    |
+    | A null value disables caching.
+    |
+    */
+    'cache' => [
+        'ttl' => null
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Entrust Role Model
     |--------------------------------------------------------------------------
     |

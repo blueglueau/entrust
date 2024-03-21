@@ -137,7 +137,28 @@ to `routeMiddleware` array in `app/Http/Kernel.php`.
 Set the property values in the `config/auth.php`.
 These values will be used by entrust to refer to the correct user table and model.
 
-To further customize table names and model namespaces, edit the `config/entrust.php`.
+To further customize table names, model namespaces and __Cache__ behaviour, edit the `config/entrust.php`.
+
+Ensure the configuration is installed/published into your app.
+```
+php artisan vendor:publish --force --provider='Zizaco\Entrust\EntrustServiceProvider' 
+```
+
+### Cache
+
+The package supports caching **Users' Roles** and **Roles' Permissions**.
+
+
+To enable caching change the entrust config **cache.ttl** value, this is the _time to live_ for cache entries in minutes.
+The default ttl value is `null` which disables caching behaviour.
+
+```
+    // config/entrust.php
+    
+    'cache' => [
+        'ttl' => 60
+    ], 
+```
 
 ### User relation to roles
 

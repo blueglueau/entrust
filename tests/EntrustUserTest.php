@@ -1143,4 +1143,15 @@ class HasRoleUser implements EntrustUserInterface
     {
 
     }
+
+
+    /**
+     * See \Illuminate\Database\Eloquent\Model::getKey
+     *
+     * @return mixed
+     */
+    public function getKey()
+    {
+        return $this->id;
+    }
 }

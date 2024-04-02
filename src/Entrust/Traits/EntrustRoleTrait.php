@@ -17,8 +17,13 @@ trait EntrustRoleTrait
     //Big block of caching functionality.
     public function cachedPermissions()
     {
-        $rolePrimaryKey = $this->primaryKey;
-        $cacheKey = 'entrust_permissions_for_role_' . $this->$rolePrimaryKey;
+        if(! $this->getKey()) {
+            // Do not generate partial cache-keys when a Role's primary-key is empty.
+            // e.g. when a "saving" event is fired and any of Entrust's `hasRole`,
+            // `can` or `ability` methods are called.
+            return collect();
+        }
+        $cacheKey = 'entrust_permissions_for_role_' . $this->getKey();
         if (Cache::getStore() instanceof TaggableStore) {
             return Cache::tags(Config::get('entrust.permission_role_table'))->remember($cacheKey, Config::get('entrust.cache.ttl'), function () {
                 return $this->perms()->get();

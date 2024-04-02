@@ -92,7 +92,7 @@ class EntrustUserTest extends TestCase
         |------------------------------------------------------------
         */
         Config::shouldReceive('get')->with('entrust.role_user_table')->times(9)->andReturn('role_user');
-        Config::shouldReceive('get')->with('cache.ttl')->times(9)->andReturn('1440');
+        Config::shouldReceive('get')->with('entrust.cache.ttl')->times(9)->andReturn('1440');
         Cache::shouldReceive('tags->remember')->times(9)->andReturn($user->roles);
         Cache::shouldReceive('getStore')->times(9)->andReturn(new ArrayStore);
 
@@ -139,7 +139,7 @@ class EntrustUserTest extends TestCase
         $roleA->shouldReceive('cachedPermissions')->times(11)->andReturn($roleA->perms);
         $roleB->shouldReceive('cachedPermissions')->times(7)->andReturn($roleB->perms);
         Config::shouldReceive('get')->with('entrust.role_user_table')->times(11)->andReturn('role_user');
-        Config::shouldReceive('get')->with('cache.ttl')->times(11)->andReturn('1440');
+        Config::shouldReceive('get')->with('entrust.cache.ttl')->times(11)->andReturn('1440');
         Cache::shouldReceive('tags->remember')->times(11)->andReturn($user->roles);
         Cache::shouldReceive('getStore')->times(11)->andReturn(new ArrayStore);
 
@@ -185,7 +185,7 @@ class EntrustUserTest extends TestCase
         */
         $role->shouldReceive('cachedPermissions')->times(6)->andReturn($role->perms);
         Config::shouldReceive('get')->with('entrust.role_user_table')->times(6)->andReturn('role_user');
-        Config::shouldReceive('get')->with('cache.ttl')->times(6)->andReturn('1440');
+        Config::shouldReceive('get')->with('entrust.cache.ttl')->times(6)->andReturn('1440');
         Cache::shouldReceive('tags->remember')->times(6)->andReturn($user->roles);
         Cache::shouldReceive('getStore')->times(6)->andReturn(new ArrayStore);
 
@@ -244,7 +244,7 @@ class EntrustUserTest extends TestCase
         $roleA->shouldReceive('cachedPermissions')->times(16)->andReturn($roleA->perms);
         $roleB->shouldReceive('cachedPermissions')->times(12)->andReturn($roleB->perms);
         Config::shouldReceive('get')->with('entrust.role_user_table')->times(32)->andReturn('role_user');
-        Config::shouldReceive('get')->with('cache.ttl')->times(32)->andReturn('1440');
+        Config::shouldReceive('get')->with('entrust.cache.ttl')->times(32)->andReturn('1440');
         Cache::shouldReceive('tags->remember')->times(32)->andReturn($user->roles);
         Cache::shouldReceive('getStore')->times(32)->andReturn(new ArrayStore);
 
@@ -368,7 +368,7 @@ class EntrustUserTest extends TestCase
         $roleA->shouldReceive('cachedPermissions')->times(16)->andReturn($roleA->perms);
         $roleB->shouldReceive('cachedPermissions')->times(12)->andReturn($roleB->perms);
         Config::shouldReceive('get')->with('entrust.role_user_table')->times(32)->andReturn('role_user');
-        Config::shouldReceive('get')->with('cache.ttl')->times(32)->andReturn('1440');
+        Config::shouldReceive('get')->with('entrust.cache.ttl')->times(32)->andReturn('1440');
         Cache::shouldReceive('tags->remember')->times(32)->andReturn($user->roles);
         Cache::shouldReceive('getStore')->times(32)->andReturn(new ArrayStore);
 
@@ -530,7 +530,7 @@ class EntrustUserTest extends TestCase
         $roleA->shouldReceive('cachedPermissions')->times(16)->andReturn($roleA->perms);
         $roleB->shouldReceive('cachedPermissions')->times(12)->andReturn($roleB->perms);
         Config::shouldReceive('get')->with('entrust.role_user_table')->times(32)->andReturn('role_user');
-        Config::shouldReceive('get')->with('cache.ttl')->times(32)->andReturn('1440');
+        Config::shouldReceive('get')->with('entrust.cache.ttl')->times(32)->andReturn('1440');
         Cache::shouldReceive('tags->remember')->times(32)->andReturn($user->roles);
         Cache::shouldReceive('getStore')->times(32)->andReturn(new ArrayStore);
 
@@ -706,7 +706,7 @@ class EntrustUserTest extends TestCase
         $roleA->shouldReceive('cachedPermissions')->times(4)->andReturn($roleA->perms);
         $roleB->shouldReceive('cachedPermissions')->times(2)->andReturn($roleB->perms);
         Config::shouldReceive('get')->with('entrust.role_user_table')->times(8)->andReturn('role_user');
-        Config::shouldReceive('get')->with('cache.ttl')->times(8)->andReturn('1440');
+        Config::shouldReceive('get')->with('entrust.cache.ttl')->times(8)->andReturn('1440');
         Cache::shouldReceive('tags->remember')->times(8)->andReturn($user->roles);
         Cache::shouldReceive('getStore')->times(8)->andReturn(new ArrayStore);
 
@@ -782,7 +782,7 @@ class EntrustUserTest extends TestCase
         $roleA->shouldReceive('cachedPermissions')->times(16)->andReturn($roleA->perms);
         $roleB->shouldReceive('cachedPermissions')->times(12)->andReturn($roleB->perms);
         Config::shouldReceive('get')->with('entrust.role_user_table')->times(32)->andReturn('role_user');
-        Config::shouldReceive('get')->with('cache.ttl')->times(32)->andReturn('1440');
+        Config::shouldReceive('get')->with('entrust.cache.ttl')->times(32)->andReturn('1440');
         Cache::shouldReceive('tags->remember')->times(32)->andReturn($user->roles);
         Cache::shouldReceive('getStore')->times(32)->andReturn(new ArrayStore);
 

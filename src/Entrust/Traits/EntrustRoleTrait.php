@@ -31,14 +31,19 @@ trait EntrustRoleTrait
         } else return $this->perms()->get();
     }
 
+    public function flushCache()
+    {
+        if (Cache::getStore() instanceof TaggableStore) {
+            Cache::tags(Config::get('entrust.permission_role_table'))->flush();
+        }
+    }
+
     public function save(array $options = [])
     {   //both inserts and updates
         if (!parent::save($options)) {
             return false;
         }
-        if (Cache::getStore() instanceof TaggableStore) {
-            Cache::tags(Config::get('entrust.permission_role_table'))->flush();
-        }
+        $this->flushCache();
         return true;
     }
 
@@ -47,9 +52,7 @@ trait EntrustRoleTrait
         if (!parent::delete($options)) {
             return false;
         }
-        if (Cache::getStore() instanceof TaggableStore) {
-            Cache::tags(Config::get('entrust.permission_role_table'))->flush();
-        }
+        $this->flushCache();
         return true;
     }
 
@@ -58,9 +61,7 @@ trait EntrustRoleTrait
         if (!parent::restore()) {
             return false;
         }
-        if (Cache::getStore() instanceof TaggableStore) {
-            Cache::tags(Config::get('entrust.permission_role_table'))->flush();
-        }
+        $this->flushCache();
         return true;
     }
 
@@ -157,9 +158,7 @@ trait EntrustRoleTrait
             $this->perms()->detach();
         }
 
-        if (Cache::getStore() instanceof TaggableStore) {
-            Cache::tags(Config::get('entrust.permission_role_table'))->flush();
-        }
+        $this->flushCache();
     }
 
     /**
@@ -179,6 +178,7 @@ trait EntrustRoleTrait
             return $this->attachPermissions($permission);
         }
 
+        $this->flushCache();
         $this->perms()->attach($permission);
     }
 
@@ -199,6 +199,7 @@ trait EntrustRoleTrait
             return $this->detachPermissions($permission);
         }
 
+        $this->flushCache();
         $this->perms()->detach($permission);
     }
 

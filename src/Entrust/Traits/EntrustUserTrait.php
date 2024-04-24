@@ -41,14 +41,19 @@ trait EntrustUserTrait
         return $this->roles()->get();
     }
 
+    public function flushCache()
+    {
+        if(Cache::getStore() instanceof TaggableStore) {
+            Cache::tags(Config::get('entrust.role_user_table'))->flush();
+        }
+    }
+
     /**
      * {@inheritDoc}
      */
     public function save(array $options = [])
     {   //both inserts and updates
-        if(Cache::getStore() instanceof TaggableStore) {
-            Cache::tags(Config::get('entrust.role_user_table'))->flush();
-        }
+        $this->flushCache();
         return parent::save($options);
     }
 
@@ -58,9 +63,7 @@ trait EntrustUserTrait
     public function delete(array $options = [])
     {   //soft or hard
         $result = parent::delete($options);
-        if(Cache::getStore() instanceof TaggableStore) {
-            Cache::tags(Config::get('entrust.role_user_table'))->flush();
-        }
+        $this->flushCache();
         return $result;
     }
 
@@ -70,9 +73,7 @@ trait EntrustUserTrait
     public function restore()
     {   //soft delete undo's
         $result = parent::restore();
-        if(Cache::getStore() instanceof TaggableStore) {
-            Cache::tags(Config::get('entrust.role_user_table'))->flush();
-        }
+        $this->flushCache();
         return $result;
     }
 
@@ -265,7 +266,7 @@ trait EntrustUserTrait
         if(is_array($role)) {
             $role = $role['id'];
         }
-
+        $this->flushCache();
         $this->roles()->attach($role);
     }
 
@@ -284,6 +285,7 @@ trait EntrustUserTrait
             $role = $role['id'];
         }
 
+        $this->flushCache();
         $this->roles()->detach($role);
     }
 
